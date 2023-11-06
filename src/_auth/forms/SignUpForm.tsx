@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { SignUpValidationSchema } from "@/lib/validation";
 import Loader from "@/components/shared/Loader";
 import { Link } from "react-router-dom";
+import { createUserAccount } from "@/lib/appwrite/api";
 
 const SignUpForm = () => {
   const isLoading = false;
@@ -28,11 +29,9 @@ const SignUpForm = () => {
     },
   });
 
-  // 2. Define a submit handler.
-  const onSubmit = (values: z.infer<typeof SignUpValidationSchema>) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof SignUpValidationSchema>) => {
+    const newUser = await createUserAccount(values);
+    console.log(newUser);
   };
   return (
     <Form {...form}>
